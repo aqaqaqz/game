@@ -1,4 +1,6 @@
-import win32api, win32con, time, random, win32gui
+﻿import win32api, win32con, time, random, win32gui
+
+monitor = 0
 
 spacebar = [1650, 850, 50]	#스페이스바
 fail	 = [1100, 900, 0]	#실패, 괴수
@@ -22,7 +24,7 @@ def wait(t):
 	return ['wait', t+random.random()*randomRange]
 
 def click(x,y,r):
-	x = int(x+random.random()*r)
+	x = int(x+random.random()*r) + monitor
 	y = int(y+random.random()*r)
 	
 	if(lifeBarColor != getColor(lifeBarPos)):
@@ -42,7 +44,7 @@ def runOrder(order):
 		click(order[0], order[1], order[2])
 
 def getColor(point):
-	color = win32gui.GetPixel(win32gui.GetDC(win32gui.GetActiveWindow()), point[0] , point[1])
+	color = win32gui.GetPixel(win32gui.GetDC(win32gui.GetActiveWindow()), point[0]+monitor , point[1])
 	return color
 
 getFish = [
@@ -57,6 +59,7 @@ sellFish = [
 	keepBtn,	#마지막 루프가 낚시버튼이면 낚시 종료 후 결과창이동 필요.
 	wait(10),	#마지막 루프가 낚시버튼이면 낚시 종료 후 결과창이동 필요.
 	fail,		#마지막 루프가 낚시버튼이며 낚시 실패한 경우
+	treasure,	#마지막 루프가 낚시버튼이며 정령이나 상자나온 경우.
 	wait(1),
 	keepBtn,
 	wait(15),	#만약 대기화면에서 keepBtn영역 눌리면 좃같은 거북이새끼 가끔 튀어나옴
@@ -74,7 +77,7 @@ sellFish = [
 
 controll = [
 	['loop', getFishCnt*4, getFish],#낚시 
-	wait(5),						#마지막 루프가 낚시버튼이면 최소한 고기잡는 화면으로 이동시간 필요.
+	wait(30),						#마지막 루프가 낚시버튼이면 최소한 고기잡는 화면으로 이동시간 필요.
 	['sellFish', sellFish],			#어망정리
 	wait(random.random()*10+35) 	#10~35초의 대기시간(매크로방지가능한지 테스트 필요)
 ]
