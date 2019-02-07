@@ -1,7 +1,9 @@
 var characterObj = (p)=>{
 	var obj;
+	var MAX_X = p.MAX_X;
+	var MAX_Y = p.MAX_Y;
 	var key = {l:false, r:false, u:false, d:false}; 
-	var pos = {y:p.y, x:p.x};
+	var pos = {y:MAX_Y/2+200, x:MAX_X/2, r:8};
 	var life = 3;
 	var power = 1;
 	var speed = 3;
@@ -22,9 +24,9 @@ var characterObj = (p)=>{
 
 	var updatePos = ()=>{
 		if(key.l && (pos.x-speed>=0)) pos.x-=speed;
-		if(key.r && (pos.x+speed<=p.MAX_X)) pos.x+=speed;
+		if(key.r && (pos.x+13+speed<=MAX_X)) pos.x+=speed;
 		if(key.u && (pos.y-speed>=0)) pos.y-=speed;
-		if(key.d && (pos.y+speed<=p.MAX_Y)) pos.y+=speed;
+		if(key.d && (pos.y+13+speed<=MAX_Y)) pos.y+=speed;
 	}
 
 	var uptPosAndDrawChar = (ship, ctx)=>{
@@ -34,7 +36,16 @@ var characterObj = (p)=>{
 		ctx.fill();
 	}
 
-	obj = {keyDown:keyDown, keyUp:keyUp, uptPosAndDrawChar:uptPosAndDrawChar};
+	var init = ()=>{
+		key.l = false;
+		key.r = false;
+		key.u = false;
+		key.d = false;
+		pos.y = MAX_Y/2+200;
+		pos.x = MAX_X/2;
+	}
+
+	obj = {keyDown:keyDown, keyUp:keyUp, uptPosAndDrawChar:uptPosAndDrawChar, pos:pos, init:init};
 
 	return obj;
 }
