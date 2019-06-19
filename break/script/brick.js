@@ -11,7 +11,6 @@ var brickObj = (p)=>{
 
 	var draw = ()=>{
 		ctx.beginPath();
-		ctx.fillStyle = "black";
 		ctx.fillRect(0,0,MAX_X,MAX_Y);
 		ctx.drawImage(brickImg1, 0, 0);
 		
@@ -19,7 +18,7 @@ var brickObj = (p)=>{
 		for(var h=0;h<brickInfo.length;h++){
 			for(var w=0;w<brickInfo[h].length;w++){
 				if(brickInfo[h][w] == 1){
-					ctx.fillRect(w*width, h*height, width, height);
+					ctx.drawImage(brickImg2, w*width, h*height, width, height, w*width, h*height, width, height);
 				}
 			}
 		}
