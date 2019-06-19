@@ -25,7 +25,7 @@ $(document).ready(function(){
 		ctx : ctx,
 		brickImg1 : brickImg1,
 		brickImg2 : brickImg2,
-		brickInfo : [
+		brickList : [
 			[1,0,1,0,1,0,1,0],
 			[0,1,0,1,0,1,0,1],
 			[1,0,1,0,1,0,1,0],

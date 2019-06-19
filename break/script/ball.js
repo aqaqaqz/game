@@ -56,7 +56,7 @@ var ballObj = (p)=>{
 
 	var checkBrick = (brickObj)=>{
 		var brickInfo = brickObj.getBrickInfo();
-		var brickList = brickInfo.brickInfo;
+		var brickList = brickInfo.brickList;
 		for(var h=0;h<brickList.length;h++){
 			for(var w=0;w<brickList[h].length;w++){
 				if(brickList[h][w] == 1){
@@ -66,7 +66,7 @@ var ballObj = (p)=>{
 						width:brickInfo.width
 					};
 					if(checkCrash(brick)){
-						brickObj.setBrickInfo(h, w, 0);
+						brickObj.setBrickList(h, w, 0);
 						changeBallVector(brick);
 					}
 				}
