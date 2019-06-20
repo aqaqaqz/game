@@ -6,7 +6,7 @@ var ballObj = (p)=>{
 	var pos = {y:MAX_Y/2, x:MAX_X/2};
 
 	var speed = 3;
-	var vector = {x:1, y:1}; 
+	var vector = {x:3, y:2}; 
 
 	var checkCrash = (obj)=>{
 		var barX1 = obj.pos.x;
@@ -25,9 +25,8 @@ var ballObj = (p)=>{
 	}
 
 	var updatePos = ()=>{
-		//수정필요
-		pos.x += speed/vector.x;
-		pos.y += speed/vector.y;
+		pos.x += vector.x;
+		pos.y += vector.y;
 	}
 
 	var checkWall = ()=>{
@@ -46,12 +45,30 @@ var ballObj = (p)=>{
 
 	var checkBar = (barInfo)=>{
 		if(checkCrash(barInfo)){
-			changeBallVector(barInfo);
+			pos.y = barInfo.pos.y-barInfo.height;
+			vector.y *= -1;
+			vector.x;
 		}
 	}
 
 	var changeBallVector = (obj)=>{
-		//obj의 충돌 위치에 맞춰서 ball vector갱신 필요.
+		//거지같은 수학 신발 수정필요함
+		var incline = vector.y/vector.x;
+		var r = $(ballImg).width()/2;
+		var c = pos.y+r-(pos.x+r)*incline;
+		
+		var tx = Math.abs((obj.pos.x-c)*(1/incline)/vector.x);
+		tx = Math.min(tx, Math.abs((obj.pos.x+obj.width-c)*(1/incline)/vector.x));
+		var ty = Math.abs((obj.pos.x*incline + c)/vector.y);
+		ty = Math.min(ty, Math.abs(((obj.pos.x+obj.width)*incline + c)/vector.y));
+
+		if(tx > ty){
+			vector.x *= -1;
+			pos.x += vector.x;
+		}else{
+			vector.y *= -1;
+			pos.y += vector.y;
+		}
 	}
 
 	var checkBrick = (brickObj)=>{
